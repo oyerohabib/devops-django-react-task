@@ -1,16 +1,21 @@
-version: "3.9"
+version: "3"
 
 services:
-  django:
-    image: django-project
-    build: ./backend
-    container_name: backend_c
+  frontend:
+    image: habibo1234/hng-front-end:latest
+    container_name: frontendpage
     ports:
-      - "8000:8000"
-  react:
-    build: ./frontend
-    container_name: frontend_c
+      - 3000:3000
+    depends_on:
+      - backend
+
+  backend:
+    image: habibo1234/hng-back-end:latest
+    container_name: backend
+    command: python manage.py runserver 0.0.0.0:8008
     ports:
-      - "3000:3000"
-    stdin_open: true
-    tty: true
+      - "8008:8008"
+networks:
+  default:
+  name:
+  external:
